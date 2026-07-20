@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Parabank Suite" verbose="1" parallel="false">
+
+    <test name="UI Tests">
+        <classes>
+
+            <!-- Authentication -->
+            <class name="com.victoria.parabank.tests.LoginTests"/>
+            <class name="com.victoria.parabank.tests.RegisterTests"/>
+
+            <!-- Accounts -->
+            <class name="com.victoria.parabank.tests.AccountsTests"/>
+            <class name="com.victoria.parabank.tests.OpenAccountTests"/>
+
+            <!-- Transfers -->
+            <class name="com.victoria.parabank.tests.TransferTests"/>
+
+            <!-- Bill Pay -->
+            <class name="com.victoria.parabank.tests.BillPayTests"/>
+
+            <!-- Overview / Home -->
+            <class name="com.victoria.parabank.tests.HomeTest"/>
+
+            <!-- Profile / Update -->
+            <class name="com.victoria.parabank.tests.UpdateProfileTest"/>
+
+        </classes>
+    </test>
+
+</suite>

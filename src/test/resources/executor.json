@@ -1,0 +1,12 @@
+{
+  "name": "GitHub Actions",
+  "type": "maven",
+  "url": "https://github.com/victoria/UIAutomationParabank",
+  "buildOrder": "1",
+  "buildName": "Parabank Automation",
+  "buildUrl": "https://github.com/victoria/UIAutomationParabank/actions",
+  "reportUrl": "allure-report/index.html",
+  "language": "Java",
+  "framework": "TestNG",
+  "executor": "Victoria"
+}
