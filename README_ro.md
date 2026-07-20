@@ -11,7 +11,7 @@ Acest proiect reprezintă un framework complet de QA Automation dezvoltat în Ja
 
 Framework-ul include adnotări Allure precum @Epic, @Feature, @Story, @Description, @Severity, pentru o raportare profesionistă și structurată.
 
-⚙️ Tehnologii utilizate
+ Tehnologii utilizate
 •	Java 17
 •	Selenium WebDriver 4.36
 •	TestNG 7.7
