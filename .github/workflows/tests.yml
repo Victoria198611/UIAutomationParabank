@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -38,8 +42,7 @@ jobs:
           path: target/allure-results
 
       - name: Generate Allure Report
-        run: |
-          mvn allure:report || true
+        run: mvn allure:report || true
 
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
