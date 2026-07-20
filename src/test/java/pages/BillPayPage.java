@@ -16,7 +16,7 @@ public class BillPayPage extends BasePage {
     private final By verifyAccount = By.name("verifyAccount");
     private final By amount = By.name("amount");
     private final By sendPaymentButton = By.cssSelector("input[value='Send Payment']");
-
+    private final By fromAccountDropdown = By.name("fromAccountId");
     // Confirmation locators
     private final By confirmationMessage = By.cssSelector("#rightPanel h1");
     private final By confirmationDetail = By.cssSelector("#rightPanel p");
@@ -46,9 +46,11 @@ public class BillPayPage extends BasePage {
         elementUtils.type(verifyAccount, verifyAcc);
         elementUtils.type(amount, amt);
 
+        // 🔥 AICI era problema
+        elementUtils.selectByIndex(fromAccountDropdown, 0);
+
         elementUtils.click(sendPaymentButton);
     }
-
     // Method used by your test: getConfirmationMessage()
     public String getConfirmationMessage() {
         return elementUtils.getText(confirmationMessage);

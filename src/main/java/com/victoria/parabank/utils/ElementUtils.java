@@ -3,6 +3,8 @@ package com.victoria.parabank.utils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
 
 public class ElementUtils {
 
@@ -30,5 +32,11 @@ public class ElementUtils {
     // Waits for element to be visible and returns its text
     public String getText(By locator) {
         return waitUtils.waitForVisible(locator).getText().trim();
+    }
+
+    public void selectByIndex(By locator, int index) {
+        WebElement element = waitUtils.waitForVisible(locator);
+        Select dropdown = new Select(element);
+        dropdown.selectByIndex(index);
     }
 }
