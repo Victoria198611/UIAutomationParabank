@@ -61,7 +61,7 @@ jobs:
           publish_dir: target/site/allure-maven-plugin
 
       - name: Publish Allure Report
-        uses: simple-elf/allure-report-action@v1.6
+        uses: simple-elf/allure-report-action@v1.5
         with:
           allure_results: target/allure-results
           allure_report: target/site/allure-maven-plugin
