@@ -54,6 +54,14 @@ jobs:
           echo "Listing generated Allure report files:"
           ls -R target/site/allure-maven-plugin || true
 
+      - name: Report build status
+        run: |
+          echo "======================================"
+          echo "Build completed successfully!"
+          echo " Allure report generated."
+          echo " Ready for deployment to GitHub Pages."
+          echo "======================================"
+
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
