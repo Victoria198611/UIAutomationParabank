@@ -3,6 +3,7 @@ package com.victoria.parabank.base;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -15,8 +16,26 @@ public class BaseTest {
     @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+
+        ChromeOptions options = new ChromeOptions();
+
+        // GitHub Actions setează automat variabila de mediu CI=true
+        boolean isCi = "true".equalsIgnoreCase(System.getenv("CI"));
+
+        if (isCi) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
+        }
+
+        driver = new ChromeDriver(options);
+
+        if (!isCi) {
+            driver.manage().window().maximize();
+        }
+
         driver.get("https://parabank.parasoft.com/parabank/index.htm");
     }
 
