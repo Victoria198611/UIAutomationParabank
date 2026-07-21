@@ -13,7 +13,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Allure directories -->
         <allure.results.directory>target/allure-results</allure.results.directory>
         <allure.report.directory>target/site/allure-maven-plugin</allure.report.directory>
     </properties>
@@ -34,12 +33,11 @@
             <version>5.6.2</version>
         </dependency>
 
-        <!-- TestNG -->
+        <!-- TestNG (IMPORTANT: fără scope="test") -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>7.7.1</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Allure TestNG -->
@@ -67,7 +65,7 @@
     <build>
         <plugins>
 
-            <!-- Surefire Plugin: rulează testng.xml -->
+            <!-- Surefire: rulează testng.xml corect -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -89,7 +87,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Copiere executor.json + environment.properties în allure-results -->
+            <!-- Copiere executor.json + environment.properties -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
