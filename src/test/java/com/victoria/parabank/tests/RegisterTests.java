@@ -1,15 +1,19 @@
 package com.victoria.parabank.tests;
 
+import com.victoria.parabank.base.BaseTest;
 import io.qameta.allure.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.RegisterPage;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class RegisterTests {
+
     private WebDriver driver;
     private RegisterPage registerPage;
 

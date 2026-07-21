@@ -82,9 +82,7 @@
                         </property>
                     </properties>
 
-                    <systemPropertyVariables>
-                        <allure.results.directory>${allure.results.directory}</allure.results.directory>
-                    </systemPropertyVariables>
+
                 </configuration>
             </plugin>
 

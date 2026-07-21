@@ -3,10 +3,12 @@ package com.victoria.parabank.tests;
 import com.victoria.parabank.base.BaseTest;
 import io.qameta.allure.*;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.OverviewPage;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class AccountsTests extends BaseTest {
 
     @Epic("Parabank Functional Tests")
@@ -16,17 +18,14 @@ public class AccountsTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test
     public void verifyAccountOverviewIsDisplayed() {
-        // Perform login
+
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("john", "demo");
 
-        // Navigate to overview page
         OverviewPage overviewPage = new OverviewPage(driver);
 
-        // Log the H1 text
         System.out.println("Overview H1 text: " + overviewPage.getWelcomeMessage());
 
-        // Assert that Accounts Overview is displayed
         Assert.assertTrue(
                 overviewPage.getWelcomeMessage().contains("Accounts Overview"),
                 "Overview page not loaded!"

@@ -1,15 +1,18 @@
 package com.victoria.parabank.tests;
 
 import com.victoria.parabank.base.BaseTest;
-
 import io.qameta.allure.*;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.*;
+import pages.LoginPage;
+import pages.OpenAccountPage;
+import pages.OverviewPage;
+import pages.TransferPage;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class TransferTests extends BaseTest {
-
 
     @Epic("Parabank Functional Tests")
     @Feature("Funds Transfer")
@@ -28,7 +31,6 @@ public class TransferTests extends BaseTest {
         OpenAccountPage openAccountPage = new OpenAccountPage(driver);
         openAccountPage.selectTypeAccount("CHECKING");
 
-        // BUG HANDLING: dacă dropdown-ul e gol → FAIL controlat
         int accounts = driver.findElements(By.cssSelector("#fromAccountId option")).size();
         Assert.assertTrue(accounts > 0,
                 "BUG: No accounts available in dropdown after creating new account.");

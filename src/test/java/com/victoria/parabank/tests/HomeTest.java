@@ -3,10 +3,12 @@ package com.victoria.parabank.tests;
 import com.victoria.parabank.base.BaseTest;
 import io.qameta.allure.*;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class HomeTest extends BaseTest {
 
     @Epic("Parabank Functional Tests")

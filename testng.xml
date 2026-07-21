@@ -3,6 +3,10 @@
 
 <suite name="Parabank Suite" verbose="1" parallel="false">
 
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+
     <test name="UI Tests">
         <classes>
 

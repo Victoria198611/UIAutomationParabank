@@ -3,10 +3,12 @@ package com.victoria.parabank.tests;
 import com.victoria.parabank.base.BaseTest;
 import io.qameta.allure.*;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class LoginTests extends BaseTest {
 
     @Epic("Parabank Functional Tests")
@@ -32,7 +34,10 @@ public class LoginTests extends BaseTest {
     public void verifyLoginFailsWithWrongCredentials() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("wrong", "wrong");
-        Assert.assertTrue(loginPage.getLoginErrorMessage().contains("could not be verified"), "Error message mismatch");
 
+        Assert.assertTrue(
+                loginPage.getLoginErrorMessage().contains("could not be verified"),
+                "Error message mismatch"
+        );
     }
-    }
+}

@@ -4,11 +4,13 @@ import com.victoria.parabank.base.BaseTest;
 import io.qameta.allure.*;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.OpenAccountPage;
 import pages.OverviewPage;
 
+@Listeners({io.qameta.allure.testng.AllureTestNg.class})
 public class OpenAccountTests extends BaseTest {
 
     @Epic("Parabank Functional Tests")
