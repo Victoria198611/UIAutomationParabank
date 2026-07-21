@@ -35,6 +35,13 @@ jobs:
       - name: Run tests
         run: mvn clean test || true
 
+      - name: Create environment.properties
+        run: |
+          mkdir -p target/allure-results
+          echo "Browser=Chrome" > target/allure-results/environment.properties
+          echo "OS=Ubuntu" >> target/allure-results/environment.properties
+          echo "Java=17" >> target/allure-results/environment.properties
+
       - name: Upload Allure Results
         uses: actions/upload-artifact@v4
         with:
@@ -42,7 +49,10 @@ jobs:
           path: target/allure-results
 
       - name: Generate Allure Report
-        run: mvn allure:report || true
+        run: |
+          mvn allure:report || true
+          echo "Listing generated Allure report files:"
+          ls -R target/site/allure-maven-plugin || true
 
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
