@@ -24,11 +24,12 @@ public class AccountsTests extends BaseTest {
 
         OverviewPage overviewPage = new OverviewPage(driver);
 
-        System.out.println("Overview H1 text: " + overviewPage.getWelcomeMessage());
+        String header = overviewPage.getWelcomeMessage();
+        System.out.println("Overview H1 text: " + header);
 
         Assert.assertTrue(
-                overviewPage.getWelcomeMessage().contains("Accounts Overview"),
-                "Overview page not loaded!"
+                header.contains("Accounts Overview"),
+                "BUG: Accounts Overview page not loaded! Actual header: " + header
         );
     }
 }

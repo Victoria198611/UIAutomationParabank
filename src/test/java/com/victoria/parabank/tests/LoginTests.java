@@ -18,11 +18,16 @@ public class LoginTests extends BaseTest {
     @Severity(SeverityLevel.CRITICAL)
     @Test
     public void verifyLoginSuccessful() {
+
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("john", "demo");
 
         HomePage homePage = new HomePage(driver);
-        Assert.assertTrue(homePage.isLogoutVisible(), "Login failed");
+
+        Assert.assertTrue(
+                homePage.isLogoutVisible(),
+                "BUG: Login failed — Logout link not visible!"
+        );
     }
 
     @Epic("Parabank Functional Tests")
@@ -32,12 +37,15 @@ public class LoginTests extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void verifyLoginFailsWithWrongCredentials() {
+
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login("wrong", "wrong");
 
+        String error = loginPage.getLoginErrorMessage();
+
         Assert.assertTrue(
-                loginPage.getLoginErrorMessage().contains("could not be verified"),
-                "Error message mismatch"
+                error.toLowerCase().contains("could not be verified"),
+                "BUG: Wrong error message for invalid login! Actual: " + error
         );
     }
 }

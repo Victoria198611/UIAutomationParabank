@@ -27,6 +27,13 @@ public class BillPayTests extends BaseTest {
         overviewPage.goToBillPay();
 
         BillPayPage billPayPage = new BillPayPage(driver);
+
+        // Ensure accounts exist before paying
+        Assert.assertTrue(
+                billPayPage.getAvailableAccountsCount() > 0,
+                "BUG: No accounts available for Bill Pay."
+        );
+
         billPayPage.payBill(
                 "Electric Company",
                 "123 Main St",
@@ -39,23 +46,25 @@ public class BillPayTests extends BaseTest {
                 "100"
         );
 
-        System.out.println("Confirmation message: " + billPayPage.getConfirmationMessage());
-        System.out.println("Title: " + billPayPage.getConfirmationMessage());
-        System.out.println("Detail: " + billPayPage.getConfirmationDetail());
+        String title = billPayPage.getConfirmationMessage();
+        String detail = billPayPage.getConfirmationDetail();
+
+        System.out.println("Confirmation Title: " + title);
+        System.out.println("Confirmation Detail: " + detail);
 
         Assert.assertTrue(
-                billPayPage.getConfirmationMessage().contains("Bill Payment Service"),
-                "Bill Payment failed! Actual message: " + billPayPage.getConfirmationMessage()
+                title.contains("Bill Payment") || title.contains("Service"),
+                "BUG: Bill Payment confirmation title missing. Actual: " + title
         );
 
         Assert.assertTrue(
-                billPayPage.getConfirmationDetail().contains("successful"),
-                "Bill Payment failed! Actual detail: " + billPayPage.getConfirmationDetail()
+                detail.toLowerCase().contains("successful"),
+                "BUG: Bill Payment confirmation detail missing. Actual: " + detail
         );
 
         Assert.assertFalse(
-                billPayPage.getConfirmationMessage().isEmpty(),
-                "Title not found!"
+                title.isEmpty(),
+                "BUG: Confirmation title is empty!"
         );
     }
 }

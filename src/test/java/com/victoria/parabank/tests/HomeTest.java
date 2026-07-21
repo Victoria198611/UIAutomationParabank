@@ -18,11 +18,17 @@ public class HomeTest extends BaseTest {
     @Severity(SeverityLevel.MINOR)
     @Test
     public void verifyHomePageLoads() {
+
         HomePage homePage = new HomePage(driver);
         homePage.goToLoginPage();
 
         String welcomeMessage = homePage.getWelcomeMessage();
-        Assert.assertEquals(welcomeMessage, "Customer Login", "Home page did not load correctly!");
+
+        Assert.assertEquals(
+                welcomeMessage,
+                "Customer Login",
+                "BUG: Home page did not load correctly! Actual: " + welcomeMessage
+        );
     }
 
     @Epic("Parabank Functional Tests")
@@ -32,10 +38,15 @@ public class HomeTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Test
     public void verifyNavigationToLoginPage() {
+
         HomePage homePage = new HomePage(driver);
         homePage.goToLoginPage();
 
         LoginPage loginPage = new LoginPage(driver);
-        Assert.assertTrue(loginPage.isLoginFormVisible(), "Login form is not visible!");
+
+        Assert.assertTrue(
+                loginPage.isLoginFormVisible(),
+                "BUG: Login form is not visible!"
+        );
     }
 }

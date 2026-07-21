@@ -1,54 +1,58 @@
 package pages;
 
+import com.victoria.parabank.base.BasePage;
 import com.victoria.parabank.utils.RandomUtils;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class RegisterPage {
-    private WebDriver driver;
+public class RegisterPage extends BasePage {
 
-    // Locators
-    private By firstNameField = By.id("customer.firstName");
-    private By lastNameField = By.id("customer.lastName");
-    private By addressField = By.id("customer.address.street");
-    private By cityField = By.id("customer.address.city");
-    private By stateField = By.id("customer.address.state");
-    private By zipCodeField = By.id("customer.address.zipCode");
-    private By phoneField = By.id("customer.phoneNumber");
-    private By ssnField = By.id("customer.ssn");
-    private By usernameField = By.id("customer.username");
-    private By passwordField = By.id("customer.password");
-    private By confirmPasswordField = By.id("repeatedPassword");
-    private By registerButton = By.cssSelector("input[value='Register']");
-    private By successMessage = By.cssSelector("h1");
+    private final By firstNameField = By.id("customer.firstName");
+    private final By lastNameField = By.id("customer.lastName");
+    private final By addressField = By.id("customer.address.street");
+    private final By cityField = By.id("customer.address.city");
+    private final By stateField = By.id("customer.address.state");
+    private final By zipCodeField = By.id("customer.address.zipCode");
+    private final By phoneField = By.id("customer.phoneNumber");
+    private final By ssnField = By.id("customer.ssn");
+    private final By usernameField = By.id("customer.username");
+    private final By passwordField = By.id("customer.password");
+    private final By confirmPasswordField = By.id("repeatedPassword");
+    private final By registerButton = By.cssSelector("input[value='Register']");
 
-    // Constructor
+    // Parabank confirmation message is inside <p>, not <h1>
+    private final By successMessage = By.cssSelector("#rightPanel p");
+
     public RegisterPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
-    // Fill form
+    @Step("Fill registration form with random data")
     public void fillRegistrationForm() {
-        driver.findElement(firstNameField).sendKeys(RandomUtils.generateRandomString(6));
-        driver.findElement(lastNameField).sendKeys(RandomUtils.generateRandomString(8));
-        driver.findElement(addressField).sendKeys("Street " + RandomUtils.generateRandomNumber(1, 100));
-        driver.findElement(cityField).sendKeys("City " + RandomUtils.generateRandomString(4));
-        driver.findElement(stateField).sendKeys("State " + RandomUtils.generateRandomString(3));
-        driver.findElement(zipCodeField).sendKeys(String.valueOf(RandomUtils.generateRandomNumber(10000, 99999)));
-        driver.findElement(phoneField).sendKeys(RandomUtils.generateRandomPhone());
-        driver.findElement(ssnField).sendKeys(RandomUtils.generateRandomID());
-        driver.findElement(usernameField).sendKeys(RandomUtils.generateRandomString(8));
-        driver.findElement(passwordField).sendKeys("Pass " + RandomUtils.generateRandomString(6));
-        driver.findElement(confirmPasswordField).sendKeys("Pass " + RandomUtils.generateRandomString(6));
+
+        waitUtils.waitForVisible(firstNameField).sendKeys(RandomUtils.generateRandomString(6));
+        waitUtils.waitForVisible(lastNameField).sendKeys(RandomUtils.generateRandomString(8));
+        waitUtils.waitForVisible(addressField).sendKeys("Street " + RandomUtils.generateRandomNumber(1, 100));
+        waitUtils.waitForVisible(cityField).sendKeys("City" + RandomUtils.generateRandomString(4));
+        waitUtils.waitForVisible(stateField).sendKeys("State" + RandomUtils.generateRandomString(3));
+        waitUtils.waitForVisible(zipCodeField).sendKeys(String.valueOf(RandomUtils.generateRandomNumber(10000, 99999)));
+        waitUtils.waitForVisible(phoneField).sendKeys(RandomUtils.generateRandomPhone());
+        waitUtils.waitForVisible(ssnField).sendKeys(RandomUtils.generateRandomID());
+        waitUtils.waitForVisible(usernameField).sendKeys(RandomUtils.generateRandomString(8));
+
+        String password = "Pass" + RandomUtils.generateRandomString(6);
+        waitUtils.waitForVisible(passwordField).sendKeys(password);
+        waitUtils.waitForVisible(confirmPasswordField).sendKeys(password);
     }
 
-    // Submit form
+    @Step("Submit registration form")
     public void submitForm() {
-        driver.findElement(registerButton).click();
+        waitUtils.waitForClickable(registerButton).click();
     }
 
-    // Success message
+    @Step("Get registration success message")
     public String getSuccessMessage() {
-        return driver.findElement(successMessage).getText();
+        return waitUtils.waitForVisible(successMessage).getText().trim();
     }
 }

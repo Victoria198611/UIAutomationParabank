@@ -19,6 +19,7 @@
     </properties>
 
     <dependencies>
+
         <!-- Selenium -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -60,19 +61,20 @@
             <artifactId>log4j-core</artifactId>
             <version>2.22.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
 
-            <!-- Surefire Plugin -->
+            <!-- Surefire Plugin: rulează testng.xml -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
 
                     <properties>
@@ -81,9 +83,28 @@
                             <value>io.qameta.allure.testng.AllureTestNg</value>
                         </property>
                     </properties>
-
-
                 </configuration>
+            </plugin>
+
+            <!-- Copiere executor.json + environment.properties în allure-results -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <configuration>
+                            <target>
+                                <copy file="src/test/resources/executor.json" todir="target/allure-results"/>
+                                <copy file="src/test/resources/environment.properties" todir="target/allure-results"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Allure Maven Plugin -->

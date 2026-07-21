@@ -2,7 +2,6 @@ package com.victoria.parabank.tests;
 
 import com.victoria.parabank.base.BaseTest;
 import io.qameta.allure.*;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -31,7 +30,8 @@ public class TransferTests extends BaseTest {
         OpenAccountPage openAccountPage = new OpenAccountPage(driver);
         openAccountPage.selectTypeAccount("CHECKING");
 
-        int accounts = driver.findElements(By.cssSelector("#fromAccountId option")).size();
+        // Use Page Object method instead of driver.findElements
+        int accounts = openAccountPage.getAvailableAccountsCount();
         Assert.assertTrue(accounts > 0,
                 "BUG: No accounts available in dropdown after creating new account.");
 
@@ -41,12 +41,24 @@ public class TransferTests extends BaseTest {
         overviewPage.goToTransferFunds();
 
         TransferPage transferPage = new TransferPage(driver);
+
+        // Verify dropdowns have accounts before transfer
+        Assert.assertTrue(
+                transferPage.getFromAccountsCount() > 0,
+                "BUG: No FROM accounts available for transfer."
+        );
+
+        Assert.assertTrue(
+                transferPage.getToAccountsCount() > 0,
+                "BUG: No TO accounts available for transfer."
+        );
+
         transferPage.transferFunds("100", 0, 0);
 
         String message = transferPage.getConfirmationMessage();
 
         Assert.assertTrue(
-                message.contains("Transfer") || message.contains("Complete") || message.contains("Success"),
+                message.toLowerCase().contains("transfer"),
                 "BUG: Transfer confirmation message not found. Actual message: " + message
         );
     }

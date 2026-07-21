@@ -28,12 +28,23 @@ public class UpdateProfileTest extends BaseTest {
         OverviewPage overviewPage = new OverviewPage(driver);
         overviewPage.goToUpdateProfile();
 
-        // Step 3: Update Profile details
+        // Step 3: Update Profile details (correct parameters)
         UpdateProfilePage updateProfilePage = new UpdateProfilePage(driver);
-        updateProfilePage.updateProfile("37322783456", "Vlaicu Pircalab, 1", "Chisinau", "MD", "CHIS", "2001");
+        updateProfilePage.updateProfile(
+                "John",                 // First Name
+                "Doe",                  // Last Name
+                "Vlaicu Pircalab 1",    // Address
+                "Chisinau",             // City
+                "MD",                   // State
+                "2001"                  // Zip
+        );
 
-        // Step 4: Verify success message
-        String pageTitle = updateProfilePage.getPageTitle();
-        Assert.assertEquals(pageTitle, "Update Profile", "Profile update failed Page title mismatch. Actual: " + pageTitle);
+        // Step 4: Verify confirmation message
+        String confirmation = updateProfilePage.getConfirmationMessage();
+
+        Assert.assertTrue(
+                confirmation.toLowerCase().contains("updated"),
+                "BUG: Profile update confirmation missing. Actual: " + confirmation
+        );
     }
 }

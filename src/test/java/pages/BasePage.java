@@ -29,11 +29,11 @@ public class BasePage {
 
     // Returns the current page title
     public String getPageTitle() {
-        return driver.getTitle();
+        return driver.getTitle().trim();
     }
 
     // Returns the current page URL
     public String getCurrentUrl() {
-        return driver.getCurrentUrl();
+        return driver.getCurrentUrl().trim();
     }
 }

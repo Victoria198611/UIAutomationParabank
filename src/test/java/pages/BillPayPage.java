@@ -1,8 +1,10 @@
 package pages;
 
 import com.victoria.parabank.base.BasePage;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class BillPayPage extends BasePage {
 
@@ -17,7 +19,7 @@ public class BillPayPage extends BasePage {
     private final By amount = By.name("amount");
     private final By sendPaymentButton = By.cssSelector("input[value='Send Payment']");
     private final By fromAccountDropdown = By.name("fromAccountId");
-    // Confirmation locators
+
     private final By confirmationMessage = By.cssSelector("#rightPanel h1");
     private final By confirmationDetail = By.cssSelector("#rightPanel p");
 
@@ -25,7 +27,7 @@ public class BillPayPage extends BasePage {
         super(driver);
     }
 
-    // Method used by your test: payBill(...)
+    @Step("Pay bill to {name} with amount {amt}")
     public void payBill(String name,
                         String addr,
                         String cityVal,
@@ -36,28 +38,36 @@ public class BillPayPage extends BasePage {
                         String verifyAcc,
                         String amt) {
 
-        elementUtils.type(payeeName, name);
-        elementUtils.type(address, addr);
-        elementUtils.type(city, cityVal);
-        elementUtils.type(state, stateVal);
-        elementUtils.type(zip, zipVal);
-        elementUtils.type(phone, phoneVal);
-        elementUtils.type(account, acc);
-        elementUtils.type(verifyAccount, verifyAcc);
-        elementUtils.type(amount, amt);
+        waitUtils.waitForVisible(payeeName).sendKeys(name);
+        waitUtils.waitForVisible(address).sendKeys(addr);
+        waitUtils.waitForVisible(city).sendKeys(cityVal);
+        waitUtils.waitForVisible(state).sendKeys(stateVal);
+        waitUtils.waitForVisible(zip).sendKeys(zipVal);
+        waitUtils.waitForVisible(phone).sendKeys(phoneVal);
+        waitUtils.waitForVisible(account).sendKeys(acc);
+        waitUtils.waitForVisible(verifyAccount).sendKeys(verifyAcc);
+        waitUtils.waitForVisible(amount).sendKeys(amt);
 
-        // 🔥 AICI era problema
-        elementUtils.selectByIndex(fromAccountDropdown, 0);
+        // Select first account safely
+        WebElement dropdown = waitUtils.waitForVisible(fromAccountDropdown);
+        dropdown.findElements(By.tagName("option")).get(0).click();
 
-        elementUtils.click(sendPaymentButton);
+        waitUtils.waitForClickable(sendPaymentButton).click();
     }
-    // Method used by your test: getConfirmationMessage()
+
+    @Step("Get bill payment confirmation title")
     public String getConfirmationMessage() {
-        return elementUtils.getText(confirmationMessage);
+        return waitUtils.waitForVisible(confirmationMessage).getText().trim();
     }
 
-    // Method used by your test: getConfirmationDetail()
+    @Step("Get bill payment confirmation detail")
     public String getConfirmationDetail() {
-        return elementUtils.getText(confirmationDetail);
+        return waitUtils.waitForVisible(confirmationDetail).getText().trim();
+    }
+
+    @Step("Get number of available accounts for Bill Pay")
+    public int getAvailableAccountsCount() {
+        WebElement dropdown = waitUtils.waitForVisible(fromAccountDropdown);
+        return dropdown.findElements(By.tagName("option")).size();
     }
 }
