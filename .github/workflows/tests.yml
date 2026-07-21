@@ -38,18 +38,7 @@ jobs:
         run: npm install -g allure-commandline
 
       - name: Show Allure results structure
-        run: ls -R target || true
-
-      - name: Normalize Allure results folder
-        run: |
-          echo "Normalizing Allure results..."
-          mkdir -p target/allure-results
-          if [ -d "target/target/allure-results" ]; then
-            mv target/target/allure-results/* target/allure-results/
-            rm -rf target/target
-          fi
-          echo "Final Allure results directory content:"
-          ls -R target/allure-results || true
+        run: ls -R target/allure-results || true
 
       - name: Generate Allure Report
         run: |
