@@ -37,27 +37,17 @@ jobs:
       - name: Run tests
         run: mvn clean test || true
 
-      - name: Fix Allure results path
+      - name: Ensure Allure results exist
         run: |
-          echo "🔧 Fixing Allure results path..."
+          echo "🔧 Checking Allure results..."
           mkdir -p target/allure-results
-          if [ -d "target/target/allure-results" ]; then
-            mv target/target/allure-results/* target/allure-results/ || true
-            rm -rf target/target || true
-          fi
-          echo "📁 Allure results directory content:"
           ls -R target/allure-results || true
-
-      - name: Create environment.properties
-        run: |
-          echo "Browser=Chrome" > target/allure-results/environment.properties
-          echo "OS=Ubuntu" >> target/allure-results/environment.properties
-          echo "Java=17" >> target/allure-results/environment.properties
 
       - name: Generate Allure Report
         run: |
-          mvn allure:report || true
-          echo "Listing generated Allure report files:"
+          echo "🚀 Generating Allure report..."
+          mvn allure:report
+          echo "📁 Listing generated Allure report files:"
           ls -R target/site/allure-maven-plugin || true
 
 
@@ -68,9 +58,9 @@ jobs:
       - name: Report build status
         run: |
           echo "======================================"
-          echo "Build completed successfully!"
+          echo " Build completed successfully!"
           echo " Allure report generated."
-          echo "Ready for deployment to GitHub Pages."
+          echo " Ready for deployment to GitHub Pages."
           echo "======================================"
 
 
@@ -80,13 +70,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Verify Allure report exists
-        run: |
-          if [ ! -f "target/site/allure-maven-plugin/index.html" ]; then
-            echo " Allure report not found. Deployment skipped."
-            exit 1
-          fi
 
       - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
